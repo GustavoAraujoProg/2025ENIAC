@@ -1,0 +1,1523 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Studio Arq | Arquitetura & Design</title>
+    <style>
+      /* === RESET E ESTILOS GERAIS === */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Montserrat", sans-serif;
+      }
+
+      :root {
+        --cor-primaria: #d3b8a0;
+        --cor-secundaria: #4d4d4d;
+        --cor-clara: #f5f5f5;
+        --cor-destaque: #9c8370;
+        --sombra: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      body {
+        background-color: var(--cor-clara);
+        color: var(--cor-secundaria);
+        overflow-x: hidden;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      .secao {
+        padding: 80px 0;
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s ease;
+      }
+
+      .secao.ativa {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      h2.titulo-secao {
+        font-size: 2.5rem;
+        margin-bottom: 40px;
+        position: relative;
+        display: inline-block;
+      }
+
+      h2.titulo-secao::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -10px;
+        width: 80px;
+        height: 3px;
+        background-color: var(--cor-primaria);
+        transition: width 0.3s ease;
+      }
+
+      h2.titulo-secao:hover::after {
+        width: 100%;
+      }
+
+      .btn {
+        background-color: var(--cor-primaria);
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 30px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+      }
+
+      .btn:hover {
+        background-color: var(--cor-destaque);
+        transform: translateY(-3px);
+        box-shadow: var(--sombra);
+      }
+
+      /* === HEADER E NAVEGAÇÃO === */
+      header {
+        background-color: transparent;
+        position: fixed;
+        width: 100%;
+        z-index: 1000;
+        transition: all 0.4s ease;
+        padding: 20px 0;
+      }
+
+      header.solido {
+        background-color: white;
+        box-shadow: var(--sombra);
+        padding: 15px 0;
+      }
+
+      .nav-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--cor-secundaria);
+      }
+
+      .logo span {
+        color: var(--cor-primaria);
+      }
+
+      nav ul {
+        display: flex;
+        list-style: none;
+      }
+
+      nav ul li {
+        margin-left: 30px;
+      }
+
+      nav ul li a {
+        text-decoration: none;
+        color: var(--cor-secundaria);
+        font-weight: 500;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+
+      nav ul li a::after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: var(--cor-primaria);
+        transition: width 0.3s ease;
+      }
+
+      nav ul li a:hover::after {
+        width: 100%;
+      }
+
+      .menu-toggle {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+      }
+
+      .menu-toggle span {
+        width: 30px;
+        height: 3px;
+        background-color: var(--cor-secundaria);
+        margin: 3px 0;
+        transition: all 0.3s ease;
+      }
+
+      /* === BANNER PRINCIPAL === */
+      .banner {
+        height: 100vh;
+        background-image: linear-gradient(
+            rgba(0, 0, 0, 0.3),
+            rgba(0, 0, 0, 0.3)
+          ),
+          url("./Imagens/FotoPRINCIPAL.jpg");
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        align-items: center;
+        position: relative;
+      }
+
+      .banner-texto {
+        color: white;
+        max-width: 600px;
+      }
+
+      .banner-texto h1 {
+        font-size: 3.5rem;
+        margin-bottom: 20px;
+        animation: fadeInUp 1s ease;
+      }
+
+      .banner-texto p {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+        animation: fadeInUp 1s ease 0.3s forwards;
+        opacity: 0;
+      }
+
+      .banner-texto .btn {
+        animation: fadeInUp 1s ease 0.6s forwards;
+        opacity: 0;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* === SEÇÃO SOBRE === */
+      .sobre {
+        background-color: white;
+      }
+
+      .sobre-container {
+        display: flex;
+        align-items: center;
+        gap: 50px;
+      }
+
+      .sobre-img {
+        flex: 1;
+        height: 450px;
+        background-color: var(--cor-primaria);
+        position: relative;
+        border-radius: 10px;
+        overflow: hidden;
+      }
+
+      .sobre-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+      }
+
+      .sobre-img:hover img {
+        transform: scale(1.05);
+      }
+
+      .sobre-texto {
+        flex: 1;
+      }
+
+      .sobre-texto h2 {
+        margin-bottom: 30px;
+        font-size: 2.2rem;
+      }
+
+      .sobre-texto p {
+        margin-bottom: 20px;
+        line-height: 1.8;
+      }
+
+      .assinatura {
+        font-family: "Parisienne", cursive;
+        font-size: 2rem;
+        color: var(--cor-primaria);
+        margin-top: 20px;
+      }
+
+      /* === SEÇÃO PROJETOS === */
+      .projetos {
+        background-color: var(--cor-clara);
+      }
+
+      .projetos-filtros {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 30px;
+      }
+
+      .filtro-btn {
+        background: none;
+        border: none;
+        padding: 10px 20px;
+        margin: 0 10px;
+        cursor: pointer;
+        font-weight: 500;
+        position: relative;
+        transition: all 0.3s ease;
+      }
+
+      .filtro-btn::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 2px;
+        background-color: var(--cor-primaria);
+        transition: width 0.3s ease;
+      }
+
+      .filtro-btn:hover::after,
+      .filtro-btn.ativo::after {
+        width: 70%;
+      }
+
+      .filtro-btn.ativo {
+        color: var(--cor-primaria);
+      }
+
+      .projetos-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 30px;
+      }
+
+      .projeto-card {
+        background-color: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: var(--sombra);
+        transition: all 0.3s ease;
+        height: 400px;
+      }
+
+      .projeto-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+      }
+
+      .projeto-img {
+        height: 250px;
+        overflow: hidden;
+      }
+
+      .projeto-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+      }
+
+      .projeto-card:hover .projeto-img img {
+        transform: scale(1.1);
+      }
+
+      .projeto-info {
+        padding: 20px;
+      }
+
+      .projeto-info h3 {
+        margin-bottom: 10px;
+        font-size: 1.3rem;
+      }
+
+      .projeto-info p {
+        margin-bottom: 15px;
+        color: #777;
+        font-size: 0.9rem;
+      }
+
+      .projeto-info a {
+        color: var(--cor-primaria);
+        text-decoration: none;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        transition: all 0.3s ease;
+      }
+
+      .projeto-info a:hover {
+        color: var(--cor-destaque);
+        transform: translateX(5px);
+      }
+
+      /* === SEÇÃO TRAJETÓRIA === */
+      .trajetoria {
+        background-color: white;
+      }
+
+      .timeline {
+        position: relative;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .timeline::after {
+        content: "";
+        position: absolute;
+        width: 3px;
+        background-color: var(--cor-primaria);
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        margin-left: -1.5px;
+      }
+
+      .timeline-item {
+        padding: 10px 40px;
+        position: relative;
+        width: 50%;
+        opacity: 0;
+        transform: translateX(-50px);
+        transition: all 0.8s ease;
+      }
+
+      .timeline-item.ativa {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      .timeline-item:nth-child(even) {
+        left: 50%;
+        transform: translateX(50px);
+      }
+
+      .timeline-item:nth-child(even).ativa {
+        transform: translateX(0);
+      }
+
+      .timeline-item::after {
+        content: "";
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        right: -10px;
+        background-color: var(--cor-primaria);
+        border-radius: 50%;
+        top: 15px;
+        z-index: 1;
+      }
+
+      .timeline-item:nth-child(even)::after {
+        left: -10px;
+      }
+
+      .timeline-content {
+        padding: 20px;
+        background-color: var(--cor-clara);
+        position: relative;
+        border-radius: 6px;
+        box-shadow: var(--sombra);
+      }
+
+      .timeline-content h3 {
+        margin-bottom: 10px;
+        color: var(--cor-destaque);
+      }
+
+      .timeline-content .data {
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: var(--cor-primaria);
+      }
+
+      /* === SEÇÃO CONTATO === */
+      .contato {
+        background-color: var(--cor-clara);
+      }
+
+      .contato-container {
+        display: flex;
+        gap: 50px;
+      }
+
+      .contato-info {
+        flex: 1;
+      }
+
+      .contato-info h3 {
+        margin-bottom: 20px;
+        font-size: 1.5rem;
+      }
+
+      .contato-detalhes {
+        margin-bottom: 30px;
+      }
+
+      .contato-item {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 15px;
+      }
+
+      .contato-item i {
+        color: var(--cor-primaria);
+        margin-right: 15px;
+        font-size: 1.2rem;
+      }
+
+      .social-links {
+        display: flex;
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      .social-links a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background-color: var(--cor-primaria);
+        color: white;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+      }
+
+      .social-links a:hover {
+        background-color: var(--cor-destaque);
+        transform: translateY(-5px);
+      }
+
+      .formulario {
+        flex: 1;
+        background-color: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: var(--sombra);
+      }
+
+      .formulario h3 {
+        margin-bottom: 20px;
+        font-size: 1.5rem;
+      }
+
+      .form-grupo {
+        margin-bottom: 20px;
+      }
+
+      .form-grupo label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+      }
+
+      .form-control:focus {
+        outline: none;
+        border-color: var(--cor-primaria);
+        box-shadow: 0 0 0 3px rgba(211, 184, 160, 0.2);
+      }
+
+      textarea.form-control {
+        resize: vertical;
+        min-height: 120px;
+      }
+
+      /* === SEÇÃO LOGIN/REGISTRO === */
+      .login-registro {
+        background-color: white;
+      }
+
+      .login-container {
+        max-width: 900px;
+        margin: 0 auto;
+        background-color: var(--cor-clara);
+        border-radius: 10px;
+        box-shadow: var(--sombra);
+        overflow: hidden;
+        display: flex;
+      }
+
+      .login-imagem {
+        flex: 1;
+        background-image: url("/api/placeholder/600/800");
+        background-size: cover;
+        background-position: center;
+        min-height: 500px;
+      }
+
+      .login-formularios {
+        flex: 1;
+        padding: 40px;
+      }
+
+      .tabs {
+        display: flex;
+        margin-bottom: 30px;
+        border-bottom: 1px solid #ddd;
+      }
+
+      .tab-btn {
+        padding: 10px 20px;
+        background: none;
+        border: none;
+        font-weight: 600;
+        cursor: pointer;
+        position: relative;
+        transition: all 0.3s ease;
+      }
+
+      .tab-btn::after {
+        content: "";
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: var(--cor-primaria);
+        transition: width 0.3s ease;
+      }
+
+      .tab-btn.ativo {
+        color: var(--cor-primaria);
+      }
+
+      .tab-btn.ativo::after {
+        width: 100%;
+      }
+
+      .tab-conteudo {
+        display: none;
+      }
+
+      .tab-conteudo.ativo {
+        display: block;
+        animation: fadeIn 0.5s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* === FOOTER === */
+      footer {
+        background-color: var(--cor-secundaria);
+        color: white;
+        padding: 60px 0 30px;
+      }
+
+      .footer-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 40px;
+        margin-bottom: 40px;
+      }
+
+      .footer-coluna h3 {
+        margin-bottom: 20px;
+        color: var(--cor-primaria);
+        font-size: 1.3rem;
+      }
+
+      .footer-coluna ul {
+        list-style: none;
+      }
+
+      .footer-coluna ul li {
+        margin-bottom: 10px;
+      }
+
+      .footer-coluna ul li a {
+        color: #ccc;
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .footer-coluna ul li a:hover {
+        color: var(--cor-primaria);
+        padding-left: 5px;
+      }
+
+      .copyright {
+        text-align: center;
+        padding-top: 30px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        font-size: 0.9rem;
+        color: #aaa;
+      }
+
+      /* === RESPONSIVIDADE === */
+      @media (max-width: 992px) {
+        .sobre-container {
+          flex-direction: column;
+        }
+
+        .sobre-img {
+          width: 100%;
+        }
+
+        .contato-container {
+          flex-direction: column;
+        }
+
+        .login-container {
+          flex-direction: column;
+        }
+
+        .login-imagem {
+          height: 300px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        nav ul {
+          display: none;
+          flex-direction: column;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          width: 100%;
+          background-color: white;
+          box-shadow: var(--sombra);
+          padding: 20px 0;
+        }
+
+        nav ul.ativo {
+          display: flex;
+        }
+
+        nav ul li {
+          margin: 10px 20px;
+        }
+
+        .menu-toggle {
+          display: flex;
+        }
+
+        .banner-texto h1 {
+          font-size: 2.5rem;
+        }
+
+        .timeline::after {
+          left: 31px;
+        }
+
+        .timeline-item {
+          width: 100%;
+          padding-left: 70px;
+          padding-right: 25px;
+        }
+
+        .timeline-item::after {
+          left: 20px;
+        }
+
+        .timeline-item:nth-child(even) {
+          left: 0;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .banner-texto h1 {
+          font-size: 2rem;
+        }
+
+        .projetos-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .projetos-filtros {
+          flex-wrap: wrap;
+        }
+
+        h2.titulo-secao {
+          font-size: 2rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- HEADER -->
+    <header>
+      <div class="container nav-container">
+        <div class="logo">DANIELLE<span>ARQUITETA</span></div>
+        <div class="menu-toggle">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <nav>
+          <ul>
+            <li><a href="#inicio">Início</a></li>
+            <li><a href="#sobre">Sobre</a></li>
+            <li><a href="#projetos">Projetos</a></li>
+            <li><a href="#trajetoria">Trajetória</a></li>
+            <li><a href="#contato">Contato</a></li>
+            <li><a href="#login">Login</a></li>
+           
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- BANNER PRINCIPAL -->
+    <section class="banner" id="inicio">
+      <div class="container">
+        <div class="banner-texto">
+          <h1>Transformando espaços em experiências</h1>
+          <p>
+            Design de interiores e projetos arquitetônicos que unem
+            funcionalidade, estética e sua personalidade.
+          </p>
+          <a href="#contato" class="btn">Agende uma consulta</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO SOBRE -->
+    <section class="secao sobre" id="sobre">
+      <div class="container">
+        <h2 class="titulo-secao">Sobre mim</h2>
+        <div class="sobre-container">
+          <div class="sobre-img">
+            <img src="./Imagens/FotoSOBRE.jpg" alt="Arquiteta" />
+          </div>
+          <div class="sobre-texto">
+            <h2>Olá, eu sou a Danielle Nogueira</h2>
+            <p>
+              Arquiteta e urbanista formada pela Universidade de São Paulo
+              (USP), com especialização em Design de Interiores pela Parsons
+              School of Design (Nova York). Há mais de 5 anos transformando
+              espaços e realizando sonhos.
+            </p>
+            <p>
+              Meu trabalho é guiado pela busca da harmonia entre funcionalidade
+              e estética, sempre respeitando a personalidade e necessidades de
+              cada cliente. Acredito que os ambientes que habitamos influenciam
+              diretamente nossa qualidade de vida.
+            </p>
+            <p>
+              Cada projeto é uma oportunidade de criar espaços únicos que
+              traduzem histórias e inspiram vidas. Minha abordagem combina
+              criatividade, inovação e sustentabilidade para desenvolver
+              soluções que surpreendem e encantam.
+            </p>
+            <div class="assinatura">Danielle Nogueira</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO PROJETOS -->
+    <section class="secao projetos" id="projetos">
+      <div class="container">
+        <h2 class="titulo-secao">Meus Projetos</h2>
+        <div class="projetos-filtros">
+          <button class="filtro-btn ativo" data-filtro="todos">Todos</button>
+          <button class="filtro-btn" data-filtro="residencial">
+            Residencial
+          </button>
+          <button class="filtro-btn" data-filtro="comercial">Comercial</button>
+          <button class="filtro-btn" data-filtro="corporativo">
+            Corporativo
+          </button>
+        </div>
+        <div class="projetos-grid">
+          <!-- Projeto 1 -->
+          <div class="projeto-card" data-categoria="residencial">
+            <div class="projeto-img">
+              <img src="./Imagens/Residencial1.jpeg" alt="Projeto Residencial" />
+            </div>
+            <div class="projeto-info">
+              <h3>Casa em Alphavile</h3>
+              <p>
+                Projeto residencial com integração entre ambientes e
+                aproveitamento da luz natural.
+              </p>
+               <!----
+              <a href="#">Ver projeto →</a>
+              -->
+            </div>
+          </div>
+
+          <!-- Projeto 2 -->
+          <div class="projeto-card" data-categoria="comercial">
+            <div class="projeto-img">
+              <img src="./Imagens/Comercial1.jpeg" alt="Projeto Comercial" />
+            </div>
+            <div class="projeto-info">
+              <h3>Sala de Reunião</h3>
+              <p>
+                Um espaço que inspira: Conforto, Sofisticação e Produtividade em um só
+                Ambiente.
+              </p>
+              <!----
+             <a href="#">Ver projeto →</a>
+          -->
+              </div>
+          </div>
+
+          <!-- Projeto 3 -->
+          <div class="projeto-card" data-categoria="corporativo">
+            <div class="projeto-img">
+              <img src="./Imagens/Corporativo1.jpeg" alt="Projeto Corporativo" />
+            </div>
+            <div class="projeto-info">
+              <h3>Hall</h3>
+              <p>
+                Neste Hall,  diálogo entre o mármore e o design contemporâne cria um
+                ambiente de elegância intocada.
+              </p>
+               <!----
+              <a href="#">Ver projeto →</a>
+              -->
+            </div>
+          </div>
+
+          <!-- Projeto 4 -->
+          <div class="projeto-card" data-categoria="residencial">
+            <div class="projeto-img">
+              <img src="./Imagens/Residencial2.jpeg" alt="Projeto Residencial" />
+            </div>
+            <div class="projeto-info">
+              <h3>Casa em Caraguatatuba</h3>
+              <p>
+                Um toque de modernidade e elegância na fachada. O contraste entre o cimento
+                e a madeira ripada traz uma atmosfera única e acolhedora.
+              </p>
+               <!----
+              <a href="#">Ver projeto →</a>
+            -->
+            </div>
+          </div>
+
+          <!-- Projeto 5 -->
+          <div class="projeto-card" data-categoria="comercial">
+            <div class="projeto-img">
+              <img src="./Imagens/Comercial2.jpeg" alt="Projeto Comercial " />
+            </div>
+            <div class="projeto-info">
+              <h3>Sala de Vendas</h3>
+              <p>
+                A escolha das cores desempenha um papel fundamental. Optar por tons mais sóbrios
+                como o preto, pode criar uma sensação de elegância e sofisticação.
+              </p>
+               <!----
+              <a href="#">Ver projeto →</a>
+              -->
+            </div>
+          </div>
+
+          <!-- Projeto 6 -->
+          <div class="projeto-card" data-categoria="corporativo">
+            <div class="projeto-img">
+              <img src="./Imagens/Corportivo2.jpeg" alt="Projeto Corporativo" />
+            </div>
+            <div class="projeto-info">
+              <h3>Studio Corporativo</h3>
+              <p>
+                Sala corporativa pefeita em tons Neutros.
+              </p>
+               <!----
+              <a href="#">Ver projeto →</a>
+              -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO TRAJETÓRIA -->
+    <section class="secao trajetoria" id="trajetoria">
+      <div class="container">
+        <h2 class="titulo-secao">Minha Trajetória</h2>
+        <div class="timeline">
+          <!-- Item 1 -->
+          <div class="timeline-item">
+            <div class="timeline-content">
+              <div class="data">2019</div>
+              <h3>Formação em Arquitetura e Urbanismo</h3>
+              <p>
+                Graduação na Universidade de São Paulo (USP) com projeto de
+                conclusão premiado.
+              </p>
+            </div>
+          </div>
+
+          <!-- Item 2 -->
+          <div class="timeline-item">
+            <div class="timeline-content">
+              <div class="data">2020</div>
+              <h3>Especialização em Design de Interiores</h3>
+              <p>
+                Parsons School of Design (Nova York) - Bolsa de estudos por
+                mérito acadêmico.
+              </p>
+            </div>
+          </div>
+
+          <!-- Item 3 -->
+          <div class="timeline-item">
+            <div class="timeline-content">
+              <div class="data">2021</div>
+              <h3>Início do Studio ARQ</h3>
+              <p>
+                Fundação do escritório próprio com foco em projetos residenciais
+                e comerciais.
+              </p>
+            </div>
+          </div>
+
+          <!-- Item 4 -->
+          <div class="timeline-item">
+            <div class="timeline-content">
+              <div class="data">2022</div>
+              <h3>Prêmio Nacional de Arquitetura</h3>
+              <p>
+                Reconhecimento pelo projeto Casa Sustentável, com destaque para
+                soluções ecológicas.
+              </p>
+            </div>
+          </div>
+
+          <!-- Item 5 -->
+          <div class="timeline-item">
+            <div class="timeline-content">
+              <div class="data">2023</div>
+              <h3>Expansão Internacional</h3>
+              <p>
+                Primeiro projeto internacional realizado em Portugal, abrindo
+                portas para Europa.
+              </p>
+            </div>
+          </div>
+
+          <!-- Item 6 -->
+          <div class="timeline-item">
+            <div class="timeline-content">
+              <div class="data">2024</div>
+              <h3>Certificação em Arquitetura Sustentável</h3>
+              <p>
+                Especialização em construções verdes e implementação de práticas
+                sustentáveis.
+              </p>
+            </div>
+          </div>
+
+          <!-- Item 7 -->
+          <div class="timeline-item">
+            <div class="timeline-content">
+              <div class="data">2025</div>
+              <h3>10 Anos de Studio ARQ</h3>
+              <p>
+                Celebração de uma década de projetos inovadores e mais de 200
+                clientes satisfeitos.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO CONTATO -->
+    <section class="secao contato" id="contato">
+      <div class="container">
+        <h2 class="titulo-secao">Entre em Contato</h2>
+        <div class="contato-container">
+          <div class="contato-info">
+            <h3>Informações de Contato</h3>
+            <div class="contato-detalhes">
+              <div class="contato-item">
+                <i>📍</i>
+                <p>Av. Paulista, 1000, São Paulo - SP, Brasil</p>
+              </div>
+              <div class="contato-item">
+                <i>📞</i>
+                <p>(11) 98765-4321</p>
+              </div>
+              <div class="contato-item">
+                <i>✉️</i>
+                <p>contato@studioarq.com.br</p>
+              </div>
+              <div class="contato-item">
+                <i>🕒</i>
+                <p>Segunda a Sexta: 9h - 18h</p>
+              </div>
+            </div>
+
+            <h3>Redes Sociais</h3>
+            <div class="social-links">
+              <a href="#"><span>FB</span></a>
+              <a href="#"><span>IG</span></a>
+              <a href="#"><span>PT</span></a>
+              <a href="#"><span>LI</span></a>
+            </div>
+          </div>
+
+                    <div class="formulario">
+  <h3>Agende uma Consulta</h3>
+  <form id="formulario-contato" action="https://formsubmit.co/gustavo.araujox1206@gmail.com" method="POST">
+    <input type="hidden" name="_subject" value="Novo agendamento de consulta - Studio Arq">
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_autoresponse" value="Recebemos sua mensagem. Entraremos em contato em breve!">
+    <input type="hidden" name="_next" value="https://localhost/PROJEOT/obrigado.html">
+    
+    <div class="form-grupo">
+      <label for="nome">Nome Completo</label>
+      <input type="text" id="nome" name="nome" class="form-control" required />
+    </div>
+    <div class="form-grupo">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" class="form-control" required />
+    </div>
+    <div class="form-grupo">
+      <label for="telefone">Telefone</label>
+      <input type="tel" id="telefone" name="telefone" class="form-control" required />
+    </div>
+    <div class="form-grupo">
+      <label for="data">Data Preferencial</label>
+      <input type="date" id="data" name="data" class="form-control" required />
+    </div>
+    <div class="form-grupo">
+      <label for="mensagem">Mensagem</label>
+      <textarea
+        id="mensagem"
+        name="mensagem"
+        class="form-control"
+        placeholder="Descreva seu projeto ou necessidade..."
+        required
+      ></textarea>
+    </div>
+    <button type="submit" class="btn">Enviar Mensagem</button>
+  </form>
+</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO LOGIN/REGISTRO -->
+    <section class="secao login-registro" id="login">
+      <div class="container">
+        <h2 class="titulo-secao">Área do Cliente</h2>
+        <div class="login-container">
+          <div class="login-imagem"></div>
+          <div class="login-formularios">
+            <div class="tabs">
+              <button class="tab-btn ativo" data-tab="login">Login</button>
+              <button class="tab-btn" data-tab="registro">Criar Conta</button>
+            </div>
+
+            <!-- Formulário de Login -->
+            <div class="tab-conteudo ativo" id="tab-login">
+              <form id="formulario-login">
+                <div class="form-grupo">
+                  <label for="login-email">Email</label>
+                  <input
+                    type="email"
+                    id="login-email"
+                    class="form-control"
+                    required
+                  />
+                </div>
+                <div class="form-grupo">
+                  <label for="login-senha">Senha</label>
+                  <input
+                    type="password"
+                    id="login-senha"
+                    class="form-control"
+                    required
+                  />
+                </div>
+                <div class="form-grupo">
+                  <a
+                    href="#"
+                    style="
+                      display: block;
+                      text-align: right;
+                      color: var(--cor-primaria);
+                      text-decoration: none;
+                      margin-bottom: 20px;
+                    "
+                    >Esqueceu a senha?</a
+                  >
+                </div>
+                <button type="submit" class="btn" style="width: 100%">
+                  Entrar
+                </button>
+              </form>
+            </div>
+
+            <!-- Formulário de Registro -->
+            <div class="tab-conteudo" id="tab-registro">
+              <form id="formulario-registro">
+                <div class="form-grupo">
+                  <label for="registro-nome">Nome Completo</label>
+                  <input
+                    type="text"
+                    id="registro-nome"
+                    class="form-control"
+                    required
+                  />
+                </div>
+                <div class="form-grupo">
+                  <label for="registro-email">Email</label>
+                  <input
+                    type="email"
+                    id="registro-email"
+                    class="form-control"
+                    required
+                  />
+                </div>
+                <div class="form-grupo">
+                  <label for="registro-telefone">Telefone</label>
+                  <input
+                    type="tel"
+                    id="registro-telefone"
+                    class="form-control"
+                    required
+                  />
+                </div>
+                <div class="form-grupo">
+                  <label for="registro-senha">Senha</label>
+                  <input
+                    type="password"
+                    id="registro-senha"
+                    class="form-control"
+                    required
+                  />
+                </div>
+                <div class="form-grupo">
+                  <label for="registro-confirma-senha">Confirmar Senha</label>
+                  <input
+                    type="password"
+                    id="registro-confirma-senha"
+                    class="form-control"
+                    required
+                  />
+                </div>
+                <button type="submit" class="btn" style="width: 100%">
+                  Criar Conta
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="container">
+        <div class="footer-container">
+          <div class="footer-coluna">
+            <h3>STUDIO ARQ</h3>
+            <p style="color: #ccc; line-height: 1.6">
+              Transformando espaços em experiências únicas que refletem sua
+              personalidade e estilo de vida.
+            </p>
+          </div>
+          <div class="footer-coluna">
+            <h3>Links Rápidos</h3>
+            <ul>
+              <li><a href="#inicio">Início</a></li>
+              <li><a href="#sobre">Sobre</a></li>
+              <li><a href="#projetos">Projetos</a></li>
+              <li><a href="#trajetoria">Trajetória</a></li>
+              <li><a href="#contato">Contato</a></li>
+            </ul>
+          </div>
+          <div class="footer-coluna">
+            <h3>Serviços</h3>
+            <ul>
+              <li><a href="#">Projetos Residenciais</a></li>
+              <li><a href="#">Design de Interiores</a></li>
+              <li><a href="#">Projetos Comerciais</a></li>
+              <li><a href="#">Consultoria</a></li>
+              <li><a href="#">Reforma e Renovação</a></li>
+            </ul>
+          </div>
+          <div class="footer-coluna">
+            <h3>Newsletter</h3>
+            <p style="color: #ccc; margin-bottom: 15px">
+              Assine para receber novidades e inspirações
+            </p>
+            <form>
+              <div style="display: flex">
+                <input
+                  type="email"
+                  class="form-control"
+                  placeholder="Seu email"
+                  style="border-radius: 5px 0 0 5px"
+                />
+                <button
+                  type="submit"
+                  class="btn"
+                  style="border-radius: 0 5px 5px 0; padding: 12px 15px"
+                >
+                  →
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="copyright">
+          <p>© 2025 STUDIO ARQ. Todos os direitos reservados.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script>
+      // Esperar o DOM carregar completamente
+      document.addEventListener("DOMContentLoaded", function () {
+        // ===== MENU FIXO =====
+        const header = document.querySelector("header");
+        window.addEventListener("scroll", function () {
+          if (window.scrollY > 100) {
+            header.classList.add("solido");
+          } else {
+            header.classList.remove("solido");
+          }
+        });
+
+        // ===== MENU MOBILE =====
+        const menuToggle = document.querySelector(".menu-toggle");
+        const nav = document.querySelector("nav ul");
+
+        menuToggle.addEventListener("click", function () {
+          nav.classList.toggle("ativo");
+          // Animar o hambúrguer
+          const spans = menuToggle.querySelectorAll("span");
+          spans.forEach((span) => span.classList.toggle("ativo"));
+        });
+
+        // ===== ANIMAÇÃO DE APARECER QUANDO ROLAR A PÁGINA =====
+        const secoes = document.querySelectorAll(".secao");
+
+        const verificarVisibilidade = () => {
+          const triggerBottom = window.innerHeight * 0.8;
+
+          secoes.forEach((secao) => {
+            const secaoTopo = secao.getBoundingClientRect().top;
+
+            if (secaoTopo < triggerBottom) {
+              secao.classList.add("ativa");
+            }
+          });
+        };
+
+        window.addEventListener("scroll", verificarVisibilidade);
+        verificarVisibilidade(); // Verificar visibilidade inicial
+
+        // ===== ANIMAÇÃO DA TIMELINE =====
+        const timelineItems = document.querySelectorAll(".timeline-item");
+
+        const animarTimeline = () => {
+          const triggerBottom = window.innerHeight * 0.85;
+
+          timelineItems.forEach((item) => {
+            const itemTopo = item.getBoundingClientRect().top;
+
+            if (itemTopo < triggerBottom) {
+              item.classList.add("ativa");
+            }
+          });
+        };
+
+        window.addEventListener("scroll", animarTimeline);
+
+        // ===== FILTRO DE PROJETOS =====
+        const filtroBtns = document.querySelectorAll(".filtro-btn");
+        const projetoCards = document.querySelectorAll(".projeto-card");
+
+        filtroBtns.forEach((btn) => {
+          btn.addEventListener("click", function () {
+            // Remover classe ativo de todos os botões
+            filtroBtns.forEach((b) => b.classList.remove("ativo"));
+            // Adicionar classe ativo ao botão clicado
+            this.classList.add("ativo");
+
+            const filtro = this.getAttribute("data-filtro");
+
+            // Filtrar os projetos
+            projetoCards.forEach((card) => {
+              if (filtro === "todos") {
+                card.style.display = "block";
+              } else {
+                if (card.getAttribute("data-categoria") === filtro) {
+                  card.style.display = "block";
+                } else {
+                  card.style.display = "none";
+                }
+              }
+            });
+          });
+        });
+
+        // ===== TABS LOGIN/REGISTRO =====
+        const tabBtns = document.querySelectorAll(".tab-btn");
+        const tabConteudos = document.querySelectorAll(".tab-conteudo");
+
+        tabBtns.forEach((btn) => {
+          btn.addEventListener("click", function () {
+            // Remover classe ativo de todos os botões
+            tabBtns.forEach((b) => b.classList.remove("ativo"));
+            // Adicionar classe ativo ao botão clicado
+            this.classList.add("ativo");
+
+            const tab = this.getAttribute("data-tab");
+
+            // Mostrar conteúdo da tab
+            tabConteudos.forEach((conteudo) => {
+              conteudo.classList.remove("ativo");
+            });
+
+            document.getElementById(`tab-${tab}`).classList.add("ativo");
+          });
+        });
+
+        // ===== ROLAGEM SUAVE =====
+        document.querySelectorAll('a[href^="#"]').forEach((ancora) => {
+          ancora.addEventListener("click", function (e) {
+            e.preventDefault();
+
+            const id = this.getAttribute("href").substring(1);
+            const elemento = document.getElementById(id);
+
+            if (elemento) {
+              window.scrollTo({
+                top: elemento.offsetTop - 80,
+                behavior: "smooth",
+              });
+
+              // Fechar menu mobile se estiver aberto
+              if (nav.classList.contains("ativo")) {
+                nav.classList.remove("ativo");
+              }
+            }
+          });
+        });
+
+        // ===== FORMULÁRIO DE CONTATO =====
+        const formContato = document.getElementById("formulario-contato");
+
+        if (formContato) {
+          formContato.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            // Simular envio
+            const btn = this.querySelector('button[type="submit"]');
+            const textoOriginal = btn.textContent;
+
+            btn.textContent = "Enviando...";
+            btn.disabled = true;
+
+            setTimeout(() => {
+              alert(
+                "Mensagem enviada com sucesso! Entraremos em contato em breve."
+              );
+              btn.textContent = textoOriginal;
+              btn.disabled = false;
+              formContato.reset();
+            }, 1500);
+          });
+        }
+
+        // ===== FORMULÁRIO DE LOGIN =====
+        const formLogin = document.getElementById("formulario-login");
+
+        if (formLogin) {
+          formLogin.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            // Simular login
+            const btn = this.querySelector('button[type="submit"]');
+            const textoOriginal = btn.textContent;
+
+            btn.textContent = "Entrando...";
+            btn.disabled = true;
+
+            setTimeout(() => {
+              alert("Login realizado com sucesso!");
+              btn.textContent = textoOriginal;
+              btn.disabled = false;
+            }, 1500);
+          });
+        }
+
+        // ===== FORMULÁRIO DE REGISTRO =====
+        const formRegistro = document.getElementById("formulario-registro");
+
+        if (formRegistro) {
+          formRegistro.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            // Verificar senhas
+            const senha = document.getElementById("registro-senha").value;
+            const confirmaSenha = document.getElementById(
+              "registro-confirma-senha"
+            ).value;
+
+            if (senha !== confirmaSenha) {
+              alert("As senhas não coincidem. Por favor, tente novamente.");
+              return;
+            }
+
+            // Simular registro
+            const btn = this.querySelector('button[type="submit"]');
+            const textoOriginal = btn.textContent;
+
+            btn.textContent = "Criando conta...";
+            btn.disabled = true;
+
+            setTimeout(() => {
+              alert("Conta criada com sucesso!");
+              btn.textContent = textoOriginal;
+              btn.disabled = false;
+              formRegistro.reset();
+
+              // Mudar para a tab de login
+              document.querySelector('.tab-btn[data-tab="login"]').click();
+            }, 1500);
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
